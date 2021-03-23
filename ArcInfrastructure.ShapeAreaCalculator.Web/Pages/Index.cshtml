@@ -1,0 +1,37 @@
+﻿@page
+@model AreaCalculatorModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<h3>Select a shape:</h3>
+<form method="get">
+    <select name="shape-key">
+        @foreach (var key in Model.ShapeKeys)
+        {
+            <option selected="@Model.IsShapeSelected(key)" value="@key">@key</option>
+        }
+    </select>
+    <button type="submit">Select</button>
+</form>
+<hr />
+
+@if (Model.SelectedShapeKey != null)
+{
+    <h3>Enter dimensions:</h3>
+    <form method="post">
+        @foreach (var key in Model.DimensionKeys)
+        {
+            <label asp-for="@key">@key</label>
+            <input name="@key" />
+        }
+        <button type="submit">Calculate Area</button>
+    </form>
+}
+
+@if (Model.Area.HasValue)
+{
+    <hr />
+    <h3>Area:</h3>
+    <p>@Model.Area</p>
+}
